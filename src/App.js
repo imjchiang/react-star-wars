@@ -5,9 +5,11 @@ import axios from "axios";
 import
 {
   BrowserRouter as Router,
-  Route,
-  Link
-} from "react-router-dom"
+  Route
+} from "react-router-dom";
+
+import Home from "./Home";
+import Starship from "./Starship";
 
 class App extends Component
 {
@@ -32,21 +34,14 @@ class App extends Component
   }
 
   render()
-  {  
-    const allShips = this.state.starships.map((s, idx) =>
-    {
-      let route = `/starship/${idx}`;
-      return(
-        <Router>
-          <li key={idx}><Link to={route}>{s.name}</Link></li>
-        </Router>
-      ) 
-    });
+  {
     return (
-      <div>
-        <h1>These are some of the starships in star wars</h1>
-        {allShips}
-      </div>
+      <Router>
+        <div>
+          <Route exact path="/" render={() => <Home starships={this.state.starships} />} />
+          <Route path="/startship/:id" render={() => <Starship starships={this.state.starships} />} />
+        </div>
+      </Router>
     );
   }
 }
