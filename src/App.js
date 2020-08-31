@@ -2,6 +2,13 @@ import React, {Component} from 'react';
 import './App.css';
 import axios from "axios";
 
+import
+{
+  BrowserRouter as Router,
+  Route,
+  Link
+} from "react-router-dom"
+
 class App extends Component
 {
   state = 
@@ -28,7 +35,12 @@ class App extends Component
   {  
     const allShips = this.state.starships.map((s, idx) =>
     {
-      return <li key={idx}>{s.name}: {s.model}</li>
+      let route = `/starship/${idx}`;
+      return(
+        <Router>
+          <li key={idx}><Link to={route}>{s.name}</Link></li>
+        </Router>
+      ) 
     });
     return (
       <div>
