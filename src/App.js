@@ -1,26 +1,42 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {Component} from 'react';
 import './App.css';
+import axios from "axios";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component
+{
+  state = 
+  {
+    starships: []
+  };
+
+  componentDidMount()
+  {
+    let starshipURL = "https://swapi.dev/api/starships/"
+
+    axios.get(starshipURL)
+    .then(response =>
+    {
+      this.setState(
+      {
+        starships: response.data.results
+      });
+    })
+    .catch(err => console.log(err));
+  }
+
+  render()
+  {  
+    const allShips = this.state.starships.map((s, idx) =>
+    {
+      return <li key={idx}>{s.name}: {s.model}</li>
+    });
+    return (
+      <div>
+        <h1>These are some of the starships in star wars</h1>
+        {allShips}
+      </div>
+    );
+  }
 }
 
 export default App;
